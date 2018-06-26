@@ -51,13 +51,21 @@ public class SwipeableViewPager extends CustomViewPager {
                 startPos = event.getX();
                 currentIt = getCurrentItem();
                 resolveSwipingRightAllowed();
-                return false;
+                return super.onTouchEvent(event);
             case (MotionEvent.ACTION_MOVE):
-                return false;
+                if (!swipingAllowed) {
+                    return true;
+                }
+                return super.onTouchEvent(event);
             case (MotionEvent.ACTION_UP):
-                return false;
+                if (!swipingAllowed) {
+//                    smoothScrollTo(getWidth() * currentIt, 0);
+                    return true;
+                }
+                startPos = 0;
+                return super.onTouchEvent(event);
             default:
-                return false;
+                return super.onTouchEvent(event);
         }
     }
 

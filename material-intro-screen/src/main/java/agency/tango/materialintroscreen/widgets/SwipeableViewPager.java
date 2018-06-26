@@ -108,7 +108,7 @@ public class SwipeableViewPager extends CustomViewPager {
         if (getAdapter().shouldLockSlide(getCurrentItem())) {
             setSwipingRightAllowed(false);
         } else {
-            setSwipingRightAllowed(true);
+            setSwipingRightAllowed(false);
         }
     }
 }

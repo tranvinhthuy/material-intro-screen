@@ -122,7 +122,7 @@ public abstract class MaterialIntroActivity extends AppCompatActivity {
         SlideFragment fragment = adapter.getItem(viewPager.getCurrentItem());
         boolean hasPermissionToGrant = fragment.hasNeededPermissionsToGrant();
         if (!hasPermissionToGrant) {
-            viewPager.setSwipingRightAllowed(true);
+            viewPager.setSwipingRightAllowed(false);
             nextButtonBehaviour(viewPager.getCurrentItem(), fragment);
             messageButtonBehaviourOnPageSelected.pageSelected(viewPager.getCurrentItem());
         } else {

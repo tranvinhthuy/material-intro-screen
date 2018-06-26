@@ -2,7 +2,6 @@ package agency.tango.materialintroscreen.widgets;
 
 import android.content.Context;
 import android.support.v4.view.CustomViewPager;
-import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -22,51 +21,12 @@ public class SwipeableViewPager extends CustomViewPager {
 
     @Override
     public boolean onInterceptTouchEvent(final MotionEvent event) {
-        int action = MotionEventCompat.getActionMasked(event);
-
-        switch (action) {
-            case (MotionEvent.ACTION_DOWN):
-                return super.onInterceptTouchEvent(event);
-            case (MotionEvent.ACTION_MOVE):
-                if (!swipingAllowed) {
-                    return false;
-                }
-                return super.onInterceptTouchEvent(event);
-            case (MotionEvent.ACTION_UP):
-                if (!swipingAllowed) {
-                    return false;
-                }
-                return super.onInterceptTouchEvent(event);
-            default:
-                return super.onInterceptTouchEvent(event);
-        }
+        return false;
     }
 
     @Override
     public boolean onTouchEvent(final MotionEvent event) {
-        int action = MotionEventCompat.getActionMasked(event);
-
-        switch (action) {
-            case (MotionEvent.ACTION_DOWN):
-                startPos = event.getX();
-                currentIt = getCurrentItem();
-                resolveSwipingRightAllowed();
-                return super.onTouchEvent(event);
-            case (MotionEvent.ACTION_MOVE):
-                if (!swipingAllowed && startPos - event.getX() > 16) {
-                    return true;
-                }
-                return super.onTouchEvent(event);
-            case (MotionEvent.ACTION_UP):
-                if (!swipingAllowed && startPos - event.getX() > 16) {
-                    smoothScrollTo(getWidth() * currentIt, 0);
-                    return true;
-                }
-                startPos = 0;
-                return super.onTouchEvent(event);
-            default:
-                return super.onTouchEvent(event);
-        }
+        return false;
     }
 
     @Override

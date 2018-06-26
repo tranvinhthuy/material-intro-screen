@@ -2,6 +2,7 @@ package agency.tango.materialintroscreen.widgets;
 
 import android.content.Context;
 import android.support.v4.view.CustomViewPager;
+import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -21,12 +22,43 @@ public class SwipeableViewPager extends CustomViewPager {
 
     @Override
     public boolean onInterceptTouchEvent(final MotionEvent event) {
-        return false;
+        int action = MotionEventCompat.getActionMasked(event);
+
+        switch (action) {
+            case (MotionEvent.ACTION_DOWN):
+                return super.onInterceptTouchEvent(event);
+            case (MotionEvent.ACTION_MOVE):
+                if (!swipingAllowed) {
+                    return false;
+                }
+                return super.onInterceptTouchEvent(event);
+            case (MotionEvent.ACTION_UP):
+                if (!swipingAllowed) {
+                    return false;
+                }
+                return super.onInterceptTouchEvent(event);
+            default:
+                return super.onInterceptTouchEvent(event);
+        }
     }
 
     @Override
     public boolean onTouchEvent(final MotionEvent event) {
-        return false;
+        int action = MotionEventCompat.getActionMasked(event);
+
+        switch (action) {
+            case (MotionEvent.ACTION_DOWN):
+                startPos = event.getX();
+                currentIt = getCurrentItem();
+                resolveSwipingRightAllowed();
+                return false;
+            case (MotionEvent.ACTION_MOVE):
+                return false;
+            case (MotionEvent.ACTION_UP):
+                return false;
+            default:
+                return false;
+        }
     }
 
     @Override
